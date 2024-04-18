@@ -13,6 +13,7 @@
 
 import { Writable, Readable, Transform } from "node:stream";
 
+//Stream de leitura
 class OneToHundredStream extends Readable {
   index = 1
 
@@ -30,4 +31,22 @@ class OneToHundredStream extends Readable {
   }
 }
 
-new OneToHundredStream().pipe(process.stdout);
+//Stream de escrita
+class MultiplyByTenStream extends Writable{
+  _write(chunk, encoding, callback){
+    console.log(Number(chunk.toString()) * 10)
+    callback()
+  }
+}
+
+//Stream de transformação
+class InverseNumber extends Transform{
+  _transform(chunk, encoding, callback){
+    const inverse = Buffer.from(String(Number(chunk.toString()) * -1));
+    callback(null, inverse)
+  }
+}
+
+new OneToHundredStream()
+  .pipe(new InverseNumber())
+  .pipe(new MultiplyByTenStream());
