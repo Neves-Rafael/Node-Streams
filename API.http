@@ -12,4 +12,14 @@ GET http://localhost:3333/users
 
 ###
 
-DELETE http://localhost:3333/users/6f2bd1c3-a06b-4549-9303-ca2428ecdc94
+DELETE http://localhost:3333/users/146eb60f-8234-4e30-856b-9dc77f5d8f7f
+
+###
+
+PUT http://localhost:3333/users/3509d18b-695d-4ddf-818c-c6e60305cc50
+Content-Type: "application/json"
+
+{
+  "name": "john doe",
+  "email": "johndoe@gmail.com"
+}
