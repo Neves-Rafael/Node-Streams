@@ -1,0 +1,7 @@
+POST http://localhost:3333/tasks
+Content-Type: "application/json"
+
+{
+  "title":"Task test",
+  "description":"Description test"
+}
