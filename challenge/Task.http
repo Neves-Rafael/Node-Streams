@@ -12,4 +12,18 @@ GET http://localhost:3333/tasks
 
 ###
 
-DELETE http://localhost:3333/tasks/85fed528-d80d-4250-b6e2-e0c9e4d32866
+DELETE http://localhost:3333/tasks/91e95c16-0892-40c3-bcd4-736f9b5dd64d
+
+###
+
+PUT http://localhost:3333/tasks/84d6dce0-998b-4099-bfb7-03bb3ca41b78
+Content-Type: "application/json"
+
+{
+  "title":"Testando ",
+  "description": "Update description test"
+}
+
+###
+
+PATCH http://localhost:3333/tasks/84d6dce0-998b-4099-bfb7-03bb3ca41b78/complete

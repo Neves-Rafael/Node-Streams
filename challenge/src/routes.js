@@ -35,7 +35,17 @@ export const routes = [
     method:"PUT",
     path:buildRoutePath("/tasks/:id"),
     handle: (req, res) =>{
+      const { id } = req.params
+      const { title, description } = req.body
 
+      const task = {
+        title,
+        description
+      }
+
+      database.update("tasks", id, task)
+
+      return res.writeHead(201).end()
     }
   },
   {
@@ -51,7 +61,11 @@ export const routes = [
     method:"PATCH",
     path:buildRoutePath("/tasks/:id/complete"),
     handle: (req, res) =>{
+      const { id } = req.params
 
+      database.complete("tasks", id)
+
+      return res.writeHead(204).end()
     }
   }
 ]

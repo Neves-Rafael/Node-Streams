@@ -35,8 +35,29 @@ export class Database{
     return data
   }
 
-  update(){
+  update(table, id, data){
+    const rowIndex = this.#database[table].findIndex(index => {
+      return index.id === id
+    })
 
+    if(rowIndex < 0 || !data.title && !data.description){
+      return
+    }
+
+    const task = this.#database[table][rowIndex]
+
+    if(data.title){
+      task.title = data.title
+    }
+
+    if(data.description){
+      task.description = data.description
+    }
+
+    task.updated_at = new Date()
+    this.#persist()
+
+    return 
   }
 
   delete(table, id){
@@ -48,6 +69,20 @@ export class Database{
     if(rowIndex > -1){
       this.#database[table].splice(rowIndex, 1)
       this.#persist();
+    }
+
+    return 
+  }
+
+  complete(table, id){
+    const rowIndex = this.#database[table].findIndex(index => {
+      return index.id === id
+    })
+
+    if(rowIndex > -1 ){
+      this.#database[table][rowIndex].completed_at = new Date()
+      console.log("patch")
+      this.#persist()
     }
 
     return 
