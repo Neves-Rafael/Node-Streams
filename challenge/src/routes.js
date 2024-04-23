@@ -1,42 +1,53 @@
-import { Database } from "./database.js"
+import { Database } from "./database.js";
+import { randomUUID } from "node:crypto";
+import { buildRoutePath } from "./utils/build-route-path.js";
 
 const database = new Database;
 
 export const routes = [
   {
     method:"POST",
-    path:"/tasks",
-    handle: async(req, res) =>{
-      console.log(req.body)
-      await database.create(req, res)
+    path:buildRoutePath("/tasks"),
+    handle: async(req, res) => {
+      const { title, description } = req.body
 
-      return;
+      await database.insert("tasks", {
+        id: randomUUID(),
+        title: title,
+        description: description,
+        completed_at: null,
+        created_at: new Date(),
+        updated_at: new Date()
+      })
+
+      return res.end();
     }
   },
   {
     method:"GET",
-    path:"/tasks",
+    path:buildRoutePath("/tasks"),
     handle: (req, res) =>{
-
+      const result = database.select("tasks")
+      return res.end(JSON.stringify(result))
     }
   },
   {
     method:"PUT",
-    path:"/tasks/:id",
+    path:buildRoutePath("/tasks/:id"),
     handle: (req, res) =>{
 
     }
   },
   {
     method:"DELETE",
-    path:"/tasks/:id",
+    path:buildRoutePath("/tasks/:id"),
     handle: (req, res) =>{
 
     }
   },
   {
     method:"PATCH",
-    path:"/tasks/:id/complete",
+    path:buildRoutePath("/tasks/:id/complete"),
     handle: (req, res) =>{
 
     }

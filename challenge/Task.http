@@ -5,3 +5,7 @@ Content-Type: "application/json"
   "title":"Task test",
   "description":"Description test"
 }
+
+###
+
+GET http://localhost:3333/tasks

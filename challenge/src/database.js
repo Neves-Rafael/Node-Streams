@@ -1,22 +1,38 @@
-import { randomUUID } from "node:crypto"
+import fs from "node:fs/promises"
+
+const urlPath = new URL("../db.json", import.meta.url)
 
 export class Database{
+
   #database = {};
 
-  create(req, res){
-    // const { title, description } = req.body
-    const task = {
-      id: randomUUID(),
-      completed_at: null,
-      created_at: new Date(),
-      updated_at: new Date()
+  constructor(){
+    fs.readFile(urlPath, "utf-8").then(data => {
+      this.#database = JSON.parse(data)
+    }).catch(() =>{
+      this.#persist()
+    })
+  }
+
+  #persist(){
+    fs.writeFile(urlPath, JSON.stringify(this.#database))
+  }
+
+  insert(table, data){
+    if(Array.isArray(this.#database[table])){
+      this.#database[table].push()
+    }else{
+      this.#database[table] = data
     }
 
-    // console.log(title, description,...task)
-    // console.log(req.body)
-    
-    return
-    // return res.writeHead(task).end()
+    this.#persist();
+
+    return data;
+  }
+  
+  select(table){
+    const data = this.#database[table] ?? []
+    return data
   }
 
   update(){
