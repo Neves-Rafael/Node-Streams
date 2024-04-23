@@ -4,14 +4,19 @@ import { json } from "./middlewares/json.js"
 
 const server = http.createServer(async(req, res)=> {
   const { method, url } = req
-
+  
   await json(req,res)
-
+  
   const pathRoute = routes.find((route) => {
-    return route.method === method && url === route.path
+    return route.method === method && route.path.test(url)
   })
-   
+  
+
   if(pathRoute){
+    const routeParams = req.url.match(pathRoute.path)
+
+    req.params = { ...routeParams.groups }
+
     return pathRoute.handle(req, res)
   }
 

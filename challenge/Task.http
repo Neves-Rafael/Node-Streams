@@ -9,3 +9,7 @@ Content-Type: "application/json"
 ###
 
 GET http://localhost:3333/tasks
+
+###
+
+DELETE http://localhost:3333/tasks/85fed528-d80d-4250-b6e2-e0c9e4d32866

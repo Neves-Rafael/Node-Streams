@@ -20,9 +20,9 @@ export class Database{
 
   insert(table, data){
     if(Array.isArray(this.#database[table])){
-      this.#database[table].push()
+      this.#database[table].push(data)
     }else{
-      this.#database[table] = data
+      this.#database[table] = [data]
     }
 
     this.#persist();
@@ -39,7 +39,17 @@ export class Database{
 
   }
 
-  delete(){
+  delete(table, id){
+    const rowIndex = this.#database[table].findIndex(index => {
+      return index.id === id
+    })
 
+    
+    if(rowIndex > -1){
+      this.#database[table].splice(rowIndex, 1)
+      this.#persist();
+    }
+
+    return 
   }
 }
