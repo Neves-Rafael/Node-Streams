@@ -5,10 +5,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev" : "node --watch ./challenge/src/server.js",
+    "dev": "node --watch ./challenge/src/server.js",
+    "csv": "node ./challenge/src/csv/iterator.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "csv-generate": "^4.4.0",
+    "csv-parse": "^5.5.5"
+  }
 }

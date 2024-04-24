@@ -27,7 +27,12 @@ export const routes = [
     method:"GET",
     path:buildRoutePath("/tasks"),
     handle: (req, res) =>{
-      const result = database.select("tasks")
+      const { search } = req.query
+
+      const result = database.select("tasks", search ? {
+        title: search,
+        description: search
+      }: null)
       return res.end(JSON.stringify(result))
     }
   },
@@ -37,15 +42,20 @@ export const routes = [
     handle: (req, res) =>{
       const { id } = req.params
       const { title, description } = req.body
+      console.log(id)
 
       const task = {
         title,
         description
       }
 
-      database.update("tasks", id, task)
+      const updateTask = database.update("tasks", id, task)
 
-      return res.writeHead(201).end()
+      if(updateTask){
+        return res.writeHead(404).end(updateTask)
+      }
+
+      return res.writeHead(201)
     }
   },
   {
@@ -53,7 +63,12 @@ export const routes = [
     path:buildRoutePath("/tasks/:id"),
     handle: (req, res) =>{
       const { id } = req.params
-      database.delete("tasks", id)
+      const deleteTask = database.delete("tasks", id)
+
+      if(deleteTask){
+        return res.writeHead(404).end(deleteTask)
+      }
+
       return res.end()
     }
   },
@@ -63,9 +78,13 @@ export const routes = [
     handle: (req, res) =>{
       const { id } = req.params
 
-      database.complete("tasks", id)
+      const completeTask = database.complete("tasks", id)
 
-      return res.writeHead(204).end()
+      if(completeTask){
+        return res.writeHead(404).end(completeTask)
+      }
+
+      return res.end()
     }
   }
 ]

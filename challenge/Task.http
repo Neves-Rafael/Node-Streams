@@ -12,11 +12,11 @@ GET http://localhost:3333/tasks
 
 ###
 
-DELETE http://localhost:3333/tasks/91e95c16-0892-40c3-bcd4-736f9b5dd64d
+DELETE http://localhost:3333/tasks/bd1d4947-577e-4f99-bd51-bd029f00f4ac9
 
 ###
 
-PUT http://localhost:3333/tasks/84d6dce0-998b-4099-bfb7-03bb3ca41b78
+PUT http://localhost:3333/tasks/5f6b7615-284c-4f9e-ac28-670486c06d0c9
 Content-Type: "application/json"
 
 {
@@ -26,4 +26,4 @@ Content-Type: "application/json"
 
 ###
 
-PATCH http://localhost:3333/tasks/84d6dce0-998b-4099-bfb7-03bb3ca41b78/complete
+PATCH http://localhost:3333/tasks/5f6b7615-284c-4f9e-ac28-670486c06d0c/complete

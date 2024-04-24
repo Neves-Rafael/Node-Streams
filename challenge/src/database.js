@@ -21,6 +21,7 @@ export class Database{
   insert(table, data){
     if(Array.isArray(this.#database[table])){
       this.#database[table].push(data)
+      console.log("adicionado")
     }else{
       this.#database[table] = [data]
     }
@@ -30,8 +31,16 @@ export class Database{
     return data;
   }
   
-  select(table){
-    const data = this.#database[table] ?? []
+  select(table, search){
+    let data = this.#database[table] ?? []
+
+    if(search){
+      data = data.filter(row => {
+        return Object.entries(search).some(([key, value]) => {
+          return row[key].toLowerCase().includes(value.toLowerCase())
+        })
+      })
+    }
     return data
   }
 
@@ -40,8 +49,9 @@ export class Database{
       return index.id === id
     })
 
+
     if(rowIndex < 0 || !data.title && !data.description){
-      return
+      return "Registro não existe!"
     }
 
     const task = this.#database[table][rowIndex]
@@ -69,6 +79,8 @@ export class Database{
     if(rowIndex > -1){
       this.#database[table].splice(rowIndex, 1)
       this.#persist();
+    }else{
+      return "Registro não existe!"
     }
 
     return 
@@ -83,6 +95,8 @@ export class Database{
       this.#database[table][rowIndex].completed_at = new Date()
       console.log("patch")
       this.#persist()
+    }else{
+      return "Registro não existe!"
     }
 
     return 
